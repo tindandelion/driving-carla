@@ -92,7 +92,7 @@ One might wonder, why we need `manual` command at all? But remember, that the si
 | throttle | Throttle value |
 | steering_angle | Steering value | 
 
-Both are floating point values that lie in the range [-1, 1]. For the throttle, 0 means no throttle, 1 is the maximum value. Negative values are used for active braking. Notably, when the throttle is kept at 0, the car is slowly decelerating, so active braking might not be necessary for this project. 
+Both are floating point values that lie in the range [-1, 1]. For the throttle, 0 means no throttle, 1 is the maximum value. Negative values are used for active braking. Notably, when the throttle is kept at 0, the car is slowly decelerating on its won, so active braking might not be necessary for this project. 
 
 Steering value of [-1, 1] range... 
 
