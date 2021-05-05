@@ -2,7 +2,7 @@
 layout: post
 title:  "Communicating with the simulator"
 ---
-Communicating with the simulator is pretty straightforward. Most information can be gathered from a project template, accessible freely from the [Udacity GitHub][udacity-github]. 
+Communicating with the simulator is pretty straightforward. Most information can be gathered from a project template source code, accessible freely from the [Udacity GitHub][udacity-github]. 
 
 The controller is supposed to set up a WebScoket server, listening for simulator events on port 4567. After connecting, the simulator sends the first telemetry package. The simulator sends back a control command with values for car's steering angle and throttle. Once received the command, the simulator applies it and sends back the updated telemetry package. 
 
@@ -13,7 +13,7 @@ The telemetry package and the command share a similar low level structure. It's 
 ```
 42[<package_type>,<package_content>]
 ```
-In our project, there are only 2 package types, `telemetry` for incoming telemetry packages, and `streer` or `manual` for commands that we send back. The most interesting part is, of course, the package content. Let's see what telemetry the simulator sends to us.
+In our project, there are only 2 package types, `telemetry` for incoming telemetry packages, and `steer` or `manual` for commands that we send back. The most interesting part is, of course, the package content. Let's see what telemetry the simulator sends to us.
 
 ## Telemetry package structure
 
@@ -52,7 +52,7 @@ Most fields are quite self-explanatory:
 * Current car state: `psi` and `psi_unity` (see below) for the heading angle; `x` and `y` for current coordinates; `speed` for speed.
 * Current values of actuator values `steering_angle` and `throttle`.
 
-The trickiest part is the measure units for speed and angles. It's always been a source of confusion even when I was implementing this project for Udacity's course:
+The tricky part is the measure units for speed and angles. It's always been a source of confusion even when I was implementing this project for Udacity's course:
 
 | `psi`, `psi_unity` | Radians |
 | `speed` | Miles per hour | 
@@ -92,19 +92,18 @@ One might wonder, why we need `manual` command at all? But remember, that the si
 | throttle | Throttle value |
 | steering_angle | Steering value | 
 
-Both are floating point values that lie in the range [-1, 1]. For the throttle, 0 means no throttle, 1 is the maximum value. Negative values are used for active braking. Notably, when the throttle is kept at 0, the car is slowly decelerating on its won, so active braking might not be necessary for this project. 
+Both are floating point values that lie in the range [-1, 1]. For the throttle, 0 means no throttle, 1 is the maximum value. Negative values are used for active braking. Notably, when the throttle is kept at 0, the car is slowly decelerating on its own, so active braking might not be necessary at all for this project. 
 
-Steering value of [-1, 1] range commands the car to acquire a desired steering angle. In absolute values, the steering angle can vary in the range up to 25 degrees left or right, which for the command need to be scaled into [-1, 1] interval. We'll need to figure out experimentally which direction is negative. 
+Steering value of [-1, 1] range commands the car to acquire a desired steering angle. In absolute values, the steering angle can vary in the range up to 25 degrees left or right, which for the command need to be scaled into [-1, 1] interval. We'll need to figure out experimentally which direction is represented by negative values. 
 
 ## Putting it all together
 
-Let's now put this all into code. I've set up a Jupyter notebook to act as a workplace for this project. For WebSocket server, I'm using a nice little package [simple-websocket-server][websocket-package], which does all network communication for us. 
+Let's now put all that into some code. I've set up a Jupyter notebook to act as a workplace for this project. For WebSocket server, I'm using a nice little package [simple-websocket-server][websocket-package], which does all network communication for us. 
 
-This time, I don't bother sending actual steering commands to the simulator. To demonstrate that the communication works fine on a low level, it's enough to receive the telemetry package, and send `manual` command back. 
+This time, I don't bother sending actual steering commands to the simulator. To demonstrate that the communication works fine on a low level, it's enough to receive the telemetry package, and send `manual` command back. When started, our controller goes into an infinite loop, receiving telemetry packages from the simulator, and sending `manual` commands back. The telemetry package is parsed with a simple regex to extract the payload, which then gets converted into a dictionary of values simply using `json.loads()`. Can't get any simpler! 
 
+You can check out the source code for this post [here][simulator-0.0.1].
 
 [udacity-github]: https://github.com/udacity/CarND-MPC-Project
 [websocket-package]: https://github.com/dpallot/simple-websocket-server
-
-
-
+[simulator-0.0.1]: https://github.com/tindandelion/driving-carla/blob/0.0.1/udacity_simulator.ipynb
