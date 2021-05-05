@@ -105,5 +105,5 @@ This time, I don't bother sending actual steering commands to the simulator. To 
 You can check out the source code for this post [here][simulator-0.0.1].
 
 [udacity-github]: https://github.com/udacity/CarND-MPC-Project
-[websocket-package]: https://github.com/dpallot/simple-websocket-server
+[websocket-package]: https://pypi.org/project/simple-websocket-server/
 [simulator-0.0.1]: https://github.com/tindandelion/driving-carla/blob/0.0.1/udacity_simulator.ipynb
