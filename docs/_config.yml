@@ -28,6 +28,10 @@ github_username:  tindandelion
 
 # Build settings
 theme: minima
+highlighter: rouge
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
 plugins:
   - jekyll-feed
 

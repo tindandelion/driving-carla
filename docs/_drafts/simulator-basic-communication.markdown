@@ -94,9 +94,17 @@ One might wonder, why we need `manual` command at all? But remember, that the si
 
 Both are floating point values that lie in the range [-1, 1]. For the throttle, 0 means no throttle, 1 is the maximum value. Negative values are used for active braking. Notably, when the throttle is kept at 0, the car is slowly decelerating on its won, so active braking might not be necessary for this project. 
 
-Steering value of [-1, 1] range... 
+Steering value of [-1, 1] range commands the car to acquire a desired steering angle. In absolute values, the steering angle can vary in the range up to 25 degrees left or right, which for the command need to be scaled into [-1, 1] interval. We'll need to figure out experimentally which direction is negative. 
+
+## Putting it all together
+
+Let's now put this all into code. I've set up a Jupyter notebook to act as a workplace for this project. For WebSocket server, I'm using a nice little package [simple-websocket-server][websocket-package], which does all network communication for us. 
+
+This time, I don't bother sending actual steering commands to the simulator. To demonstrate that the communication works fine on a low level, it's enough to receive the telemetry package, and send `manual` command back. 
 
 
 [udacity-github]: https://github.com/udacity/CarND-MPC-Project
+[websocket-package]: https://github.com/dpallot/simple-websocket-server
+
 
 
