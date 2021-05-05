@@ -102,7 +102,7 @@ Let's now put all that into some code. I've set up a Jupyter notebook to act as 
 
 This time, I don't bother sending actual steering commands to the simulator. To demonstrate that the communication works fine on a low level, it's enough to receive the telemetry package, and send `manual` command back. When started, our controller goes into an infinite loop, receiving telemetry packages from the simulator, and sending `manual` commands back. The telemetry package is parsed with a simple regex to extract the payload, which then gets converted into a dictionary of values simply using `json.loads()`. Can't get any simpler! 
 
-You can check out the source code for this post [here][sim  ulator-0.0.1].
+You can check out the source code for this post [here][simulator-0.0.1].
 
 [udacity-github]: https://github.com/udacity/CarND-MPC-Project
 [websocket-package]: https://github.com/dpallot/simple-websocket-server
