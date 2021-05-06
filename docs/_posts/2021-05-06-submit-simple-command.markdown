@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Submit commands to simlator"
+title:  "Submit commands to the simlator"
 ---
 Okay, so now we know how to communicate with the simulator on the low level, and how to read the telemetry updates. It's time we started to actually control the car with the `steer` command. Let's start with the simplest possible example: drive the car with constant throttle and steering angle. But first, let's explore the anatomy of that command.
 
@@ -27,7 +27,7 @@ Note that all fields must be present in the command payload, even though we don'
 
 ## Let's drive!
 
-So now we can submit that simple command to the simulator and see what happens (source code [here][controller-code])! And indeed, the car starts moving forward with acceleration, and also is steering slightly to the left. At least, we've now learned that negative values in `steering_angle` correspond to the left direction. 
+So now we can submit that simple command to the simulator and see what happens (source code [here][controller-code])! And indeed, the car starts moving forward with acceleration, and also is steering slightly to the left. At least, we've now learned that negative values in `steering_angle` will steer the car to the left. 
 
 <p  style="text-align: center;">
     <img src="{{ site.baseurl }}{% link images/constant-throttle.gif %}" alt="Constant throttle">
