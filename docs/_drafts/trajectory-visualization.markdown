@@ -29,30 +29,61 @@ Notice that in such coordinate systems there are 2 ways to orient Y axis respect
 
 ## Coordinate transformations
 
-Let's now see how we can transform the coordinates from the global coordinate frame to the vehicle's frame. Let's assume that the origin of the vehicle frame is placed to its center of gravity $$ \pmb{c}_g $$, and the direction is given as an angle $$ \psi $$ relative to the global X axis:
+Let's now see how we can transform the coordinates from the global coordinate frame to the vehicle's frame. Let's assume that the origin of the vehicle frame is placed to its center of gravity $$\mathbf{c}_g$$, and the direction is given as an angle $$ \psi $$ relative to the global X axis:
 
 <p  style="text-align: center;">
     <img src="{{ site.baseurl }}{% link images/vehicle-coord-frame.png %}" alt="Vehicle coordinate frame">
 </p>
 
+In order to transform a point $$\mathbf{p}$$ from global coordinates into vehicle coordinates $$\mathbf{p}'$$, we need to translate by $$-\mathbf{c}_g$$ and then rotate by angle $$\psi$$ clockwise. Note that the order of transformations is important! "Translate then rotate" will give a different result than "rotate then translate". We first want to move the coordinate frame to the new origin, and then rotate around that new origin. 
 
-
-### Homogeneous coordinate system
+These elementary transformations can be represented in a matrix form as follows: 
 
 $$
-\mathbf{R}(\psi) = 
+\mathbf{R} = 
+    \begin{pmatrix}
+        \cos{\psi} & \sin{\psi}  \\
+        -\sin{\psi} & \cos{\psi}  \\
+    \end{pmatrix} \qquad
+\mathbf{t} = -\mathbf{c}_g = 
+    \begin{pmatrix}
+        -c_x \\
+        -c_y \\
+    \end{pmatrix} \qquad
+$$
+
+and so the complete transformation looks quite compact in the vector form: 
+$$\mathbf{p}' = \mathbf{R}(\mathbf{p} + \mathbf{t}) $$
+
+## The problem with translation
+
+The formula above works perfectly well for our purposes, but I'd like to go one step further and dive a bit deeper into geometric transformations. 
+
+Most common geometric transformation, such as rotation, scaling, shear, and stretching/squeezing, can be represented in a matrix form, similar to the rotation matrix above. Having them in the matrix form is very useful, since composite transformations (like, rotate by &pi;/4 and scale up by 2) effectively become matrix multiplications: 
+$$\mathbf{B}(\mathbf{Ax}) = (\mathbf{BAx}x$$. Also, a transformation can be "undone" by applying its inverse matrix. 
+
+That's true for most geometric transformations, except translation, which breaks nice uniformity of geometric transformations. Fortunately, there's a neat trick that can solve that problem: homogeneous coordinate space.
+
+## Homogeneous coordinates
+
+We convert from regular 2D coordinates to homogeneous coordinates by introducing a fictitious third dimension, where the third coordinate is always 1: $$\mathbf{p} = [x, y, 1]^T$$. Similarly, transformation matrices are extended by one column and one row, where the diagonal element is 1, and others are zeros. Interestingly, in that coordinate space translation is also represented by a matrix (it actually becomes a shear transformation in 3D homogeneous space):
+
+$$
+\mathbf{R} = 
     \begin{pmatrix}
         \cos{\psi} & \sin{\psi} & 0 \\
         -\sin{\psi} & \cos{\psi} & 0 \\
         0 & 0 & 1 \\
     \end{pmatrix} \qquad
-\mathbf{T}(\vec{c}) = 
+\mathbf{T} = 
     \begin{pmatrix}
         1 & 0 & -c_x \\
         0 & 1 & -c_y \\
         0 & 0 & 1 \\
     \end{pmatrix}
 $$
+
+So now translation can be combined with other transformations by means of matrix multiplication, and our composite transformation becomes compact and uniform: $$\mathbf{p}' = \mathbf{RTp}$$
 
 ## Putting it all together
 
