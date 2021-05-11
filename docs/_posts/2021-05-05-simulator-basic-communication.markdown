@@ -4,7 +4,7 @@ title:  "Communicating with the simulator"
 ---
 Communicating with the simulator is pretty straightforward. Most information can be gathered from a project template source code, accessible freely from the [Udacity GitHub][udacity-github]. 
 
-The controller is supposed to set up a WebScoket server, listening for simulator events on port 4567. After connecting, the simulator sends the first telemetry package. The simulator sends back a control command with values for car's steering angle and throttle. Once received the command, the simulator applies it and sends back the updated telemetry package. 
+The controller is supposed to set up a WebSocket server, listening for simulator events on port 4567. After connecting, the simulator sends the first telemetry package. The simulator sends back a control command with values for car's steering angle and throttle. Once received the command, the simulator applies it and sends back the updated telemetry package. 
 
 One important note is that the controller is an orchestrator in this pairing. The simulator will only send back the telemetry as a response to the command from the latter, with the exception of the very first telemetry reading, so the controller is responsible for timing the communication.
 
