@@ -15,17 +15,17 @@ Remember that a few next waypoints from the planned trajectory are received in t
 }
 {% endhighlight %}
 
-Also remember that the simulator's command package contains a pair of fields `next_x` and `next_y` that should contain the trajectory points to display. So the task seems pretty straightforward: take the waypoint data from the telemetry, and put them into the command package. There's one caveat though: waypoints in the telemetry package are in *global* coordinate frame, but the command package expects the trajectory coordinates in *vehicle* coordinate frame. In order to display the planned trajectory correctly, our controller needs to transform the coordinates between those two frames. 
+Remember also that the simulator's command package contains a pair of fields `next_x` and `next_y` that should contain the trajectory points to display. So the task seems pretty straightforward: take the waypoint data from the telemetry, and put them into the command package. There's one caveat though: waypoints in the telemetry package are in *global* coordinate frame, but the command package expects the trajectory coordinates in *vehicle* coordinate frame. In order to display the planned trajectory correctly, our controller needs to transform the coordinates between those two frames. 
 
 ## Coordinate frames
 
-The *world*, or *global*, or *inertial* coordinate frame is a fixed frame, attached to the Earth. Often we represent it as *East North Up (ENU)*, where X axis points to the East, Y axis points to the North, and Z axis goes up, and we discard the Earth's curvature. The origin is some arbitrary fixed reference point nearby. 
+A *world*, or *global*, or *inertial* coordinate frame is a fixed frame, attached to the Earth. Often we represent it as *East North Up (ENU)*, where X axis points to the East, Y axis points to the North, and Z axis goes up, and we discard the Earth's curvature. The origin is some arbitrary fixed reference point nearby. 
 
-Another commonly used global coordinate frame is *Earth-Centered, Earth Fixed (ECEF)* coordinate frame, which places the origin at the Earth's center, +X axis passes through the intersection of Equator and Prime Meridian, +Z goes though the North Pole, and +Y is orthogonal to +X and +Z. This coordinate system is used as a primary system in GPS. 
+Another commonly used global coordinate frame is *Earth-Centered, Earth Fixed (ECEF)* coordinate frame, which places the origin at the Earth's center, +X axis passes through the intersection of Equator and Prime Meridian, +Z goes though the North Pole, and +Y is orthogonal to +X and +Z. This coordinate frame is used as a primary system in GPS. 
 
 The vehicle coordinate frame is attached to the vehicle, with the origin at some important point of the vehicle, e.g. the center of gravity, with +X axis pointing forward from the vehicle, +Z going up.
 
-Notice that in such coordinate systems there are 2 ways to orient Y axis respective to X and Z axes: *right-handed* and *left-handed*. The choice is somewhat arbitrary, conventionally [right-handed][right-hand-rule] is more common. 
+Notice that in such coordinate systems there are 2 ways to orient Y axis respective to X and Z axes: *right-handed* and *left-handed*. The choice is somewhat arbitrary; conventionally [right-handed][right-hand-rule] is more common. 
 
 ## Coordinate transformations
 
@@ -60,9 +60,9 @@ $$\mathbf{p}' = \mathbf{R}(\mathbf{p} + \mathbf{t}) $$
 The formula above works perfectly well for our purposes, but I'd like to go one step further and dive a bit deeper into geometric transformations. 
 
 Most common geometric transformation, such as rotation, scaling, shear, and stretching/squeezing, can be represented in a matrix form, similar to the rotation matrix above. Having them in the matrix form is very useful, since composite transformations (like, rotate by &pi;/4 and scale up by 2) effectively become matrix multiplications: 
-$$\mathbf{B}(\mathbf{Ax}) = (\mathbf{BAx}x$$. Also, a transformation can be "undone" by applying its inverse matrix. 
+$$\mathbf{B}(\mathbf{Ax}) = (\mathbf{BA})\mathbf{x}$$. Also, a transformation can be "undone" by applying its inverse matrix. 
 
-That's true for most geometric transformations, except translation, which breaks nice uniformity of geometric transformations. Fortunately, there's a neat trick that can solve that problem: homogeneous coordinate space.
+That's true for most geometric transformations, except translation, which breaks that nice uniformity. Fortunately, there's a neat trick that can solve that problem: homogeneous coordinate space.
 
 ## Homogeneous coordinates
 
@@ -87,8 +87,18 @@ So now translation can be combined with other transformations by means of matrix
 
 ## Putting it all together
 
+To summarize what I do in this exercise: 
+* I receive waypoints `ptsx`, `ptsy` in the telemetry package. I also get vehicle coordinates (`x`, `y`), and orientation angle `psi`;
+* I apply the transformation to the waypoints, from global coordinate frame to vehicle frame;
+* I send the result back to the simulator in the command package in arrays `next_x` and `next_y`.
+
+The source code for this exercise is located [here][simulator-0.0.3].
+
+Having the planned trajectory in the command package, we can now see it as a yellow line in the simulator:
+
 <p  style="text-align: center;">
     <img src="{{ site.baseurl }}{% link images/visualize-trajectory.gif %}" alt="Visualize trajectory">
 </p>
 
 [right-hand-rule]: https://en.wikipedia.org/wiki/Right-hand_rule
+[simulator-0.0.3]: https://github.com/tindandelion/driving-carla/blob/0.0.3/udacity_simulator.ipynb
