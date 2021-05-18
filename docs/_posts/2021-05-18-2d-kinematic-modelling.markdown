@@ -3,7 +3,7 @@ layout: post
 title:  "Kinematic modeling in 2D"
 math: true
 ---
-Our next task will be to predict car's trajectory, given its current settings. That predicted trajectory will be passed to the simulator and displayed along with the planned trajectory. Put formally, we need to develop a *vehicle motion model* that could help us solve the following task: 
+Our next task will be to predict car's trajectory, given its current settings. That predicted trajectory will be passed to the simulator and displayed along with the planned trajectory. Stated formally, we need to develop a *vehicle motion model* that could help us solve the following task: 
 
     Given car's current velocity and steering angle, 
     predict it's position at any time.
@@ -22,13 +22,13 @@ In this project, we'll only deal with kinematic modeling.
 
 ## State-based model of a unicycle
 
-Let's take a look at the simplest possible wheeled vehicle: a *unicycle*. This vehicle can move forward with the velocity $$v$$ at the heading $$\theta$$. It can can turn left or right with some angular velocity $$\omega$$. By geometric constraints, $$v$$ is always tangential to its trajectory.
+Let's take a look at the simplest possible wheeled vehicle: a *unicycle*. This vehicle can move forward with the velocity $$v$$ at the heading $$\theta$$. It can also turn left or right with some angular velocity $$\omega$$. By geometric constraints, $$v$$ is always tangential to the vehicle's trajectory.
 
 <p  style="text-align: center;">
     <img src="{{ site.baseurl }}{% link images/unicycle-model.png %}" alt="Unicycle model">
 </p>
 
-Such type of model is called *a state-space model*. A *state* is a set of variables that fully describe the system at the current time. The state can change over time, and it can also be affected by external factors, which act as *inputs* to the model. The model describes how the state evolves with time in response to the inputs. These laws of change are represented by the very specific form of first order differential equations:
+Such kind of a model is called a *state-space model*. A *state* is a set of variables that fully describe the system at the current time. The state changes over time, and it can also be affected by external factors, which act as *inputs* to the model. The model describes how the state evolves with time in response to the inputs. These laws of change are represented by the very specific form of first order differential equations:
 
 $$
 \begin{cases}
@@ -39,13 +39,13 @@ $$
 \end{cases}
 $$
 
-where $$\mathbf{x} = [x_1, x_2, \ldots, x_n]$$ is a state vector, and $$\mathbf{u} = [u_1, u_2, \ldots, u_m]$$ is a vector of inputs. We have the derivatives on the left side, and functions of current state and inputs on the right side. 
+where $$\mathbf{x} = [x_1, x_2, \ldots, x_n]$$ is a state vector, and $$\mathbf{u} = [u_1, u_2, \ldots, u_m]$$ is a vector of inputs. We have the derivatives on the left side, and functions of the current state and inputs on the right side. 
 
 In case of the unicycle model, the state vector is coordinates and heading $$[x, y, \theta]$$; the input vector is velocities $$[v, \omega]$$.
 
 #### From continuous to discrete time
 
-One very convenient property of having a vehicle model in a space-state form is that it can easily be transformed into a set of equations once we move to the discrete time domain. For example, for the unicycle model from above we can easily derive the equations to calculate its trajectory: 
+One very convenient property of having a vehicle model in a space-state form is that it can easily be transformed into a set of state equations once we move to the discrete time domain. For example, for the unicycle model from above we can easily derive the equations to calculate its trajectory: 
 
 $$
 \begin{cases}
