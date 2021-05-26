@@ -45,7 +45,7 @@ $$
    & \tan \delta = \frac{l_f + l_r}{R_1} \implies \frac{1}{R_1} = \frac{\tan \delta}{l_f + l_r} \\
 \end{align}
 \implies
-\tan \beta = \frac{l_r}{l_f + l_r} \tan \delta
+\bbox[10px, border: 1px solid]{ \tan \beta = \frac{l_r}{l_f + l_r} \tan \delta }
 $$
 
 
