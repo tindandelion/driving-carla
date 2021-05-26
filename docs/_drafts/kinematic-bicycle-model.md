@@ -33,7 +33,7 @@ $$
 
 There are 2 unknowns in the system above: the rotation radius $$R$$ and the slip angle $$\beta$$. We'll need to use a bit of geometry to derive them from already known values. 
 
-To find $$\beta$$, let's look closely at 2 triangles from the picture above, the big $$OW_rF$$ and the small $$OW_rC$$. First, we can show that angle at vertex *O*, $$\angle W_rOW_f = \delta$$. Indeed, if we consider the angle at the vertex $$W_f$$, we can see from the picture that : $$\angle W_rW_fO= \frac \pi 2 - \delta$$. Since the angle at vertex $$W_r$$ is orthogonal, we derive that $$\angle W_rOW_f = \pi - \left(\frac{\pi}{2} + \frac{\pi}{2} + \delta \right) = \delta$$.
+To find $$\beta$$, let's look closely at 2 triangles from the picture above, the big $$W_rOW_f$$ and the small $$W_rOC$$. First, we can show that angle at vertex *O*, $$\angle W_rOW_f = \delta$$. Indeed, if we consider the angle at the vertex $$W_f$$, we can see from the picture that : $$\angle W_rW_fO= \frac \pi 2 - \delta$$. Since the angle at vertex $$W_r$$ is orthogonal, we derive that $$\angle W_rOW_f = \pi - \left(\frac{\pi}{2} + \frac{\pi}{2} + \delta \right) = \delta$$.
 
 With the similar reasoning for the small triangle $$W_rOC$$ we can show that the angle at vertex O: $$\angle W_rOC = \beta$$.
 
@@ -45,10 +45,59 @@ $$
    & \tan \delta = \frac{l_f + l_r}{R_1} \implies \frac{1}{R_1} = \frac{\tan \delta}{l_f + l_r} \\
 \end{align}
 \implies
-\bbox[10px, border: 1px solid]{ \tan \beta = \frac{l_r}{l_f + l_r} \tan \delta }
+\bbox[10px, lightgray]{ \tan \beta = \frac{l_r}{l_f + l_r} \tan \delta }
+$$
+
+Next, let's find the rotation radius $$R$$. Looking at the small triangle $$W_rOC$$ we can see that $$R$$, $$R_1$$ and $$\beta$$ are related so that $$\cos \beta = \frac{R_1}{R}$$. Since we already have equations for $$\beta$$ and $$R_1$$ from previous equations, solve for $$\frac{1}{R}$$: 
+
+$$
+\cos \beta = \frac{R_1}{R} \implies 
+\bbox[10px, lightgray] {
+\frac{1}{R} = \frac{1}{R_1} \cos \beta = \frac{\tan \delta}{l_f + l_r} \cos \beta
+}
+$$
+
+Now we can substitute $$\frac{1}{R}$$ into the equation for $$\dot{\psi}$$ and get the complete set of differential equations for our bicycle model: 
+
+$$
+\bbox[10px, lightgray]{
+\begin{cases}
+\dot{x} = v \cos(\psi + \beta) \\
+\dot{y} = v \sin(\psi + \beta) \\
+\dot{\psi} = \frac{v}{l_f + l_r} \cos \beta \tan \delta \\
+\end{cases}
+
+\quad \text{where} \quad
+
+\beta = \tan^{-1}\left( \frac{l_r}{l_f + l_r} \tan \delta \right)
+}
+$$
+
+## Special reference points
+
+The equations above allow us to choose the reference point *C* anywhere on the vehicle axis. There are 2 specific locations where the angle $$\beta$$ basically goes away and the equations look much simpler. In particular, when we choose to put a reference point to the rear axel, $$\beta$$ becomes 0. Similarly, for the front axel, $$\beta$$ becomes equal to the steering angle $$\delta$$. That allows for a few simplifications to the model: 
+
+$$
+\text{Rear axel } (\beta = 0)  \qquad
+\begin{cases} 
+\dot{x} = v \cos \psi \\
+\dot{y} = v \sin \psi \\
+\dot{\psi} = \frac{v}{L} \tan \delta \\
+\end{cases} 
 $$
 
 
+$$
+\text{Front axel } (\beta = \delta)  \qquad
+\begin{cases}
+\dot{x} = v \cos(\psi + \delta) \\
+\dot{y} = v \sin(\psi + \delta) \\
+\dot{\psi} = \frac{v}{L} \sin \delta \\
+\end{cases}
+$$
 
+Here, *L* is the total length of the vehicle frame, no need to account for rear and front parts separately. 
 
+## What's next
 
+Okay, so now we have a set of state equations that describe a kinematic bicycle model. Now it's time to put them into use and see if we can predict the car's trajectory. Stay tuned for the next exercise! 
