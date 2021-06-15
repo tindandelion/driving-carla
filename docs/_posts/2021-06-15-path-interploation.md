@@ -55,7 +55,9 @@ Now, using the interpolated waypoints, the controller is able to follow the refe
     <img src="{{ site.baseurl }}{% link images/cte-graph-with-interp.png %}" alt="Cross track error with interpolation">
 </p>
 
-Notice that the RMSE dropped from 0.62 meters to 0.19 meters. Not bad for such a small change!
+Notice that the RMSE dropped from 0.62 meters to 0.19 meters. Not bad for such a small change! Also visually it's noticeable that the control is now much smoother, and the car stays on the path most of the time:
+
+<center><iframe width="560" height="315" src="https://www.youtube.com/embed/HruqL5nHEBY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
 
 ## What's next
 
