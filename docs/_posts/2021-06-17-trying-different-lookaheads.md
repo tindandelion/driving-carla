@@ -39,7 +39,7 @@ The code for this exercise is available on [GitHub][github-link]. For now, I fee
 
 Next, we're going to switch the subject and pay closer attention at the speed control. By now, we've been simply supplying the constant value to the throttle control. It's time we got more accurate about that!
 
-[github-link]: https://github.com/tindandelion/driving-carla/blob/0.0.8/udacity_simulator.ipynb
+[github-link]: https://github.com/tindandelion/driving-carla/blob/0.1.0/udacity_simulator.ipynb
 
 
 
