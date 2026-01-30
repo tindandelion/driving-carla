@@ -1,7 +1,8 @@
 # Driving Carla: a learning project in self-driving cars 
 
-[![Demo Video](https://img.youtube.com/vi/epFsNGSm8pk/hqdefault.jpg)](https://www.youtube.com/watch?v=epFsNGSm8pk)
-
-<center><iframe width="560" height="315" src="https://www.youtube.com/embed/epFsNGSm8pk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
+<center>
+  [![Demo Video](https://img.youtube.com/vi/epFsNGSm8pk/hqdefault.jpg)](https://www.youtube.com/watch?v=epFsNGSm8pk)
+  [![Watch on YouTube](https://img.shields.io/badge/▶_Watch_Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=epFsNGSm8pk)
+</center>
 
 [Project diary](https://www.tindandelion.com/driving-carla/)
